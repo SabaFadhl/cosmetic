@@ -5,22 +5,36 @@ from django.http import HttpResponse
 # Create your views here.
 def home(request):
     '''
-    this is  view to show homepage
+    this is  view to show home page
     '''
-  
-    return HttpResponse("Hello")
-def brand_list(request):
+    template_name='index.html'
+    return render(request,template_name)
+def about(request):
+    '''
+    this is  view to show about page
+    '''
+    template_name='about.html'
+    return render(request,template_name)
+def contact(request):
+    '''
+    this is  view to show contact page
+    '''
+    template_name='contact.html'
+    return render(request,template_name)
+
+def brands_list(request):
     '''
     this is  view to show brand page
     '''
-  
-    return HttpResponse("brand_list")
+    template_name='makeup/brands.html'
+    return render(request,template_name)
 def products_list(request):
     '''
     this is  view to show products page
     '''
-  
-    return HttpResponse("products_list")
+    template_name='makeup/products.html'
+    return render(request,template_name)
+
 def brand_details(request):
     '''
     this is  view to show  details of brand 
