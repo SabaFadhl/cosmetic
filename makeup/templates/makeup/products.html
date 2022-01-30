@@ -24,42 +24,18 @@
                </h2>
             </div>
             <div class="row">
+               
+               {%for product in products%}
+               
                <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="box">
                      <div class="option_container">
                         <div class="options">
-                           <a href="" class="option1">
-                           Men's Shirt
-                           </a>
-                           <a href="" class="option2">
-                           Buy Now
-                           </a>
-                        </div>
-                     </div>
-                     <div class="img-box">
-                        <img src="{%static 'images/p1.png'%}" alt="">
-							<img src="{%static 'images/p1.png'%}" alt="IMG">
-
-                     </div>
-                     <div class="detail-box">
-                        <h5>
-                           Men's Shirt
-                        </h5>
-                        <h6>
-                           $75
-                        </h6>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-sm-6 col-md-4 col-lg-3">
-                  <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a href="" class="option1">
+                           <a href="{{product.id}}" class="option1">
                            Add To Cart
                            </a>
-                           <a href="" class="option2">
-                           Buy Now
+                           <a href="{%url 'product-detail' product.id%}" class="option2">
+                           show details
                            </a>
                         </div>
                      </div>
@@ -68,71 +44,23 @@
                      </div>
                      <div class="detail-box">
                         <h5>
-                           Men's Shirt
+                           {{product.name}}
                         </h5>
                         <h6>
-                           $80
+                           ${{product.price}}
                         </h6>
                      </div>
                   </div>
                </div>
-               <div class="col-sm-6 col-md-4 col-lg-3">
-                  <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a href="" class="option1">
-                           Add To Cart
-                           </a>
-                           <a href="" class="option2">
-                           Buy Now
-                           </a>
-                        </div>
-                     </div>
-                     <div class="img-box">
-                        <img src="{%static 'images/p3.png'%}" alt="">
-                     </div>
-                     <div class="detail-box">
-                        <h5>
-                           Women's Dress
-                        </h5>
-                        <h6>
-                           $68
-                        </h6>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-sm-6 col-md-4 col-lg-3">
-                  <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a href="" class="option1">
-                           Add To Cart
-                           </a>
-                           <a href="" class="option2">
-                           Buy Now
-                           </a>
-                        </div>
-                     </div>
-                     <div class="img-box">
-                        <img src="{%static 'images/p3.png'%}" alt="">
-                     </div>
-                     <div class="detail-box">
-                        <h5>
-                           Women's Dress
-                        </h5>
-                        <h6>
-                           $68
-                        </h6>
-                     </div>
-                  </div>
-               </div>
-               </div>
-            </div>
+               {% endfor %}
+
+              
             {% comment %} <div class="btn-box">
                <a href="">
                View All products
                </a>
             </div> {% endcomment %}
+         </div>
          </div>
       </section>
       <!-- end product section -->

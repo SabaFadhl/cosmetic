@@ -6,14 +6,14 @@ class Brand(models.Model):
     this model test brand
     '''
     
-    Name=models.CharField(max_length=50)
-    Orgin=models.CharField(max_length=50)
+    name=models.CharField(max_length=50)
+    orgin=models.CharField(max_length=50)
     
     def __str__(self) :
-        return self.Name
+        return self.name
 
     def get_absolute_url(self):
-        return f"/brands/{self.Name}/"
+        return f"/brands/{self.name}/"
     
     
     
@@ -21,15 +21,15 @@ class Products(models.Model):
     '''
     this model test brand
     '''
-    Name=models.CharField(max_length=50)
-    Kind=models.CharField(max_length=50)
-    Descreption=models.TextField()
-    Expir_date=models.DateField()
-    Price=models.PositiveIntegerField(default=10, validators=[MinValueValidator(5)])
+    name=models.CharField(max_length=50)
+    kind=models.CharField(max_length=50)
+    descreption=models.TextField(null=True)
+    expir_date=models.DateField(null=True)
+    price=models.PositiveIntegerField(default=10, validators=[MinValueValidator(5)])
     brand=models.ForeignKey(Brand,on_delete=models.CASCADE,null=True)
     
     def __str__(self) :
-        return self.Name
+        return self.name
 
     def get_absolute_url(self):
-        return f"/products/{self.Name}/"
+        return f"/products/{self.name}/"

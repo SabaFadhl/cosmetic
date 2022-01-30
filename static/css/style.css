@@ -384,12 +384,12 @@ a:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 215px;
+  /* height: 215px; */
 }
 
 .product_section .box .img-box img {
-  max-width: 100%;
-  max-height: 160px;
+  max-width: 70%;
+  max-height: 70%;/*160px*/
   -webkit-transition: all .3s;
   transition: all .3s;
 }
@@ -573,7 +573,7 @@ a:focus {
 .why_section .box {
     text-align: center;
     margin-top: 45px;
-    background-color: #002c3e;
+    background-color: #222;
     padding: 45px 50px;
     border-radius: 5px;
     color: #ffffff;
@@ -1138,4 +1138,9 @@ form input[type="submit"]:focus {
 }
 .full{
   align-self: center;
+}
+.product_name{
+  font-size: 18px;
+  margin-top: 2.5em;
+  font-weight: 700;
 }
