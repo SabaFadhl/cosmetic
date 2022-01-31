@@ -1,0 +1,50 @@
+{% extends 'makeup/base.html' %}
+{% load static %}
+
+   {%block content%}
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            
+            <div class="row">
+               
+               <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  
+                  <h1>{{ form.errors }}</h1>
+                  {% comment %} {% for i in forms.errors %}
+                  <p> {{i}}</p>
+                  {% endfor %} 
+                  {% for i in errors %}
+                  <p> {{i}}</p>
+                  {% endfor %}{% endcomment %}
+              
+                  <input type="submit" value="Submit">
+              
+              </form>  
+
+              
+            {% comment %} <div class="btn-box">
+               <a href="">
+               View All products
+               </a>
+            </div> {% endcomment %}
+         </div>
+         </div>
+      </section>
+      <!-- end product section -->
+      {%endblock content%}

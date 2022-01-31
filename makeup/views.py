@@ -1,11 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 # Create your views here.
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView,FormView,CreateView,UpdateView,DeleteView
+from .forms import ProductsForm
+from django.shortcuts import reverse
+from django.urls import reverse_lazy
+# from bootstrap_datepicker_plus import DatePickerInput
 
-
+class SellerProducts(ListView):
+    """
+    this is list view for products useing genric list view
+    """
+    model = Products
+    context_object_name = 'products'
+    template_name = 'seller/products.html'
+    queryset =Products.objects.order_by("-id")
+    
 class ProductsList(ListView):
     """
     this is list view for post useing genric list view
@@ -13,24 +25,25 @@ class ProductsList(ListView):
     model = Products
     context_object_name = 'products'
     template_name = 'makeup/products.html'
-class HomeList(ListView):
-    """
-    this is list view new products useing genric list view
-    """
-    model = Products
-    # context_object_name = 'products'
-    template_name = 'makeup/index.html'
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super(HomeList, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        User = get_user_model()
-        myReport={"Products":Products.objects.all().count(),"Brand":Brand.objects.all().count(),"Users":User.objects.all().count()}
-        context['reports']=myReport
-        context['newest']  = Products.objects.all()
-        # context['newest']  = Products.objects.exclude(id=Products.id).distinct().order_by("-expir_date")[:3]
+# class HomeList(ListView):
+#     """
+#     this is list view new products useing genric list view
+#     """
+#     model = Products
+#     # context_object_name = 'products'
+#     template_name = 'makeup/index.html'
+#     def get_context_data(self, **kwargs):
+#         # Call the base implementation first to get a context
+#         context = super(HomeList, self).get_context_data(**kwargs)
+#         # Add in a QuerySet of all the books
+#         User = get_user_model()
+#         myReport={"Products":Products.objects.all().count(),"Brand":Brand.objects.all().count(),"Users":User.objects.all().count()}
+#         context['reports']=myReport
+#         context['newest']  = Products.objects.all()
+#         # context['newest']  = Products.objects.exclude(id=Products.id).distinct().order_by("-expir_date")[:3]
         
-        return context
+#         return context
+
 class BrandsList(ListView):
     """
     this is list view for post useing genric list view
@@ -84,16 +97,84 @@ def products_list(request):
     template_name='makeup/products.html'
     return render(request,template_name)
 
-def brand_details(request):
-    '''
-    this is  view to show  details of brand 
-    '''
-    return HttpResponse("Hello")
+def AddProduct(request, id=None):
+    form = ProductsForm
+    
+    template_name = 'seller/form.html'
 
-# def products_details(request):
-#     '''
-#     this is  view to show  details of products
-#     '''
-#     template_name='makeup/products_details.html'
-#     return render(request,template_name)
+    product = None
+    if id:
+        try:
 
+            product = Products.objects.get(id=id)
+        except Products.DoesNotExist:
+            # return redirect('', permanent=False)
+            pass
+    if request.method == 'POST':
+        form = ProductsForm(request.POST)
+        print("post")
+        if form.is_valid():
+            print("valid")
+            
+            if not id:
+                print("save")
+                
+                form.save()
+            else:
+                form.update(product)
+            # return redirect('')
+        print(form.errors)
+        print(request.POST)
+        context = {
+            'form': form
+        }
+
+        # return redirect('products-seller', permanent=False)
+        # return render(request, template_name, context)
+        
+
+    
+    context = {
+            'form': ProductsForm()
+        }
+    if id:
+        context = {
+             'form': ProductsForm({"name": product.name,"kind": product.kind,"descreption": product.descreption,"expir_date": product.expir_date,"price": product.price,"brand": product.brand})
+        }
+    return render(request, template_name, context)
+
+class AddProductFormView(FormView):
+    template_name = 'seller/form.html'
+    form_class = ProductsForm
+    success_url = '/thanks/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        return super().form_valid(form)
+
+class productCreateView(CreateView):
+    template_name = 'seller/form.html'
+    model = Products
+    # success_url = 'products-seller'
+    fields = ['name','kind','descreption','expir_date','price','brand']
+    # def get_form(self):
+    #     form = super().get_form()
+    #     form.fields['expir_date'].widget = DatePickerInput()
+    #     return form 
+
+    def get_success_url(self):
+        return self.request.GET.get('next', reverse('products-seller'))
+
+class productUpdateView(UpdateView):
+    model = Products
+    template_name = 'seller/form.html'
+    
+    fields = ['name','kind','descreption','expir_date','price','brand']
+    success_url = reverse_lazy('products-seller')
+
+class productDeleteView(DeleteView):
+    model = Products
+    template_name = 'seller/confirm.html'
+    
+    success_url = reverse_lazy('products-seller')  

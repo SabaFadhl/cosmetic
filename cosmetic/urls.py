@@ -22,9 +22,10 @@ from makeup.urls import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('seller/', admin.site.urls),
+    # path('seller/', ''),
     path('', views.home,name="home"),
     path('', include('makeup.urls')),
+    # path('seller', include('seller.urls')),
     
     # path('brands/<name>',brand_list ),
     # path('products/<name>/', products_list),

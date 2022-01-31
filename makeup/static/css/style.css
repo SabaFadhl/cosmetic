@@ -1144,3 +1144,10 @@ form input[type="submit"]:focus {
   margin-top: 2.5em;
   font-weight: 700;
 }
+
+.list-inline{
+  text-align: center;
+}
+.center{
+  text-align:-webkit-center;
+}

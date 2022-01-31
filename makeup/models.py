@@ -31,5 +31,6 @@ class Products(models.Model):
     def __str__(self) :
         return self.name
 
-    def get_absolute_url(self):
-        return f"/products/{self.name}/"
+    # def get_absolute_url(self):
+    #     # return f"/products/{self.name}/"
+    #     pass
