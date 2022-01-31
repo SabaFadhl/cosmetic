@@ -19,7 +19,7 @@ class HomeList(ListView):
     """
     model = Products
     # context_object_name = 'products'
-    template_name = 'index.html'
+    template_name = 'makeup/index.html'
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(HomeList, self).get_context_data(**kwargs)
@@ -55,20 +55,20 @@ def home(request):
         'newest' : newest,
         'reports': myReport,
     }
-    template_name='index.html'
+    template_name='makeup/index.html'
     return render(request,template_name,context)
 
 def about(request):
     '''
     this is  view to show about page
     '''
-    template_name='about.html'
+    template_name='makeup/about.html'
     return render(request,template_name)
 def contact(request):
     '''
     this is  view to show contact page
     '''
-    template_name='contact.html'
+    template_name='makeup/contact.html'
     return render(request,template_name)
 
 def brands_list(request):

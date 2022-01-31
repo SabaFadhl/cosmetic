@@ -17,8 +17,12 @@ from django.contrib import admin
 from django.urls import path,include
 from makeup.views import *
 from makeup.urls import *
+from makeup.views import *
+from makeup.urls import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('seller/', admin.site.urls),
     path('', views.home,name="home"),
     path('', include('makeup.urls')),
     
