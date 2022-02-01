@@ -14,6 +14,7 @@ urlpatterns = [
     path('seller/products/add', productCreateView.as_view(), name='add-products'),
     path('seller/products/edit/<int:pk>',productUpdateView.as_view(),name="edit-product"),
     path('seller/products/delete/<int:pk>',productDeleteView.as_view(),name="delete-product"),
-    
+    path("register", views.register_request, name="register"),
+    path("login", views.login_request, name="login")
     
 ]

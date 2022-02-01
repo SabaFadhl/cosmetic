@@ -3,11 +3,16 @@ from .models import *
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 # Create your views here.
-from django.views.generic import ListView, DetailView,FormView,CreateView,UpdateView,DeleteView
-from .forms import ProductsForm
+from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
+from .forms import ProductsForm, NewUserForm
 from django.shortcuts import reverse
 from django.urls import reverse_lazy
+# from .forms import NewUserForm
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm #add this
 # from bootstrap_datepicker_plus import DatePickerInput
+
 
 class SellerProducts(ListView):
     """
@@ -16,8 +21,9 @@ class SellerProducts(ListView):
     model = Products
     context_object_name = 'products'
     template_name = 'seller/products.html'
-    queryset =Products.objects.order_by("-id")
-    
+    queryset = Products.objects.order_by("-id")
+
+
 class ProductsList(ListView):
     """
     this is list view for post useing genric list view
@@ -41,8 +47,9 @@ class ProductsList(ListView):
 #         context['reports']=myReport
 #         context['newest']  = Products.objects.all()
 #         # context['newest']  = Products.objects.exclude(id=Products.id).distinct().order_by("-expir_date")[:3]
-        
+
 #         return context
+
 
 class BrandsList(ListView):
     """
@@ -51,55 +58,67 @@ class BrandsList(ListView):
     model = Brand
     context_object_name = 'brands'
     template_name = 'makeup/brands.html'
+
+
 class ProductDetailView(DetailView):
-      model = Products
-      template_name='makeup/products_details.html'
-      context_object_name = 'product'    
+    model = Products
+    template_name = 'makeup/products_details.html'
+    context_object_name = 'product'
+
+
 def home(request):
     '''
     this is  view to show home page
     '''
     User = get_user_model()
-    myReport={"Products":Products.objects.all().count(),"Brand":Brand.objects.all().count(),"Users":User.objects.all().count()}
+    myReport = {"Products": Products.objects.all().count(
+    ), "Brand": Brand.objects.all().count(), "Users": User.objects.all().count()}
     # MyModel.objects.order_by('-id')[:1]
 
-    newest=Products.objects.order_by("-id")[:3]
-    context={
-        'newest' : newest,
+    newest = Products.objects.order_by("-id")[:3]
+    context = {
+        'newest': newest,
         'reports': myReport,
     }
-    template_name='makeup/index.html'
-    return render(request,template_name,context)
+    template_name = 'makeup/index.html'
+    return render(request, template_name, context)
+
 
 def about(request):
     '''
     this is  view to show about page
     '''
-    template_name='makeup/about.html'
-    return render(request,template_name)
+    template_name = 'makeup/about.html'
+    return render(request, template_name)
+
+
 def contact(request):
     '''
     this is  view to show contact page
     '''
-    template_name='makeup/contact.html'
-    return render(request,template_name)
+    template_name = 'makeup/contact.html'
+    return render(request, template_name)
+
 
 def brands_list(request):
     '''
     this is  view to show brand page
     '''
-    template_name='makeup/brands.html'
-    return render(request,template_name)
+    template_name = 'makeup/brands.html'
+    return render(request, template_name)
+
+
 def products_list(request):
     '''
     this is  view to show products page
     '''
-    template_name='makeup/products.html'
-    return render(request,template_name)
+    template_name = 'makeup/products.html'
+    return render(request, template_name)
+
 
 def AddProduct(request, id=None):
     form = ProductsForm
-    
+
     template_name = 'seller/form.html'
 
     product = None
@@ -115,10 +134,10 @@ def AddProduct(request, id=None):
         print("post")
         if form.is_valid():
             print("valid")
-            
+
             if not id:
                 print("save")
-                
+
                 form.save()
             else:
                 form.update(product)
@@ -131,17 +150,16 @@ def AddProduct(request, id=None):
 
         # return redirect('products-seller', permanent=False)
         # return render(request, template_name, context)
-        
 
-    
     context = {
-            'form': ProductsForm()
-        }
+        'form': ProductsForm()
+    }
     if id:
         context = {
-             'form': ProductsForm({"name": product.name,"kind": product.kind,"descreption": product.descreption,"expir_date": product.expir_date,"price": product.price,"brand": product.brand})
+            'form': ProductsForm({"name": product.name, "kind": product.kind, "descreption": product.descreption, "expir_date": product.expir_date, "price": product.price, "brand": product.brand})
         }
     return render(request, template_name, context)
+
 
 class AddProductFormView(FormView):
     template_name = 'seller/form.html'
@@ -153,28 +171,65 @@ class AddProductFormView(FormView):
         # It should return an HttpResponse.
         return super().form_valid(form)
 
+
 class productCreateView(CreateView):
     template_name = 'seller/form.html'
     model = Products
     # success_url = 'products-seller'
-    fields = ['name','kind','descreption','expir_date','price','brand']
+    fields = ['name', 'kind', 'descreption', 'expir_date', 'price', 'brand']
     # def get_form(self):
     #     form = super().get_form()
     #     form.fields['expir_date'].widget = DatePickerInput()
-    #     return form 
+    #     return form
 
     def get_success_url(self):
         return self.request.GET.get('next', reverse('products-seller'))
 
+
 class productUpdateView(UpdateView):
     model = Products
     template_name = 'seller/form.html'
-    
-    fields = ['name','kind','descreption','expir_date','price','brand']
+
+    fields = ['name', 'kind', 'descreption', 'expir_date', 'price', 'brand']
     success_url = reverse_lazy('products-seller')
+
 
 class productDeleteView(DeleteView):
     model = Products
     template_name = 'seller/confirm.html'
-    
-    success_url = reverse_lazy('products-seller')  
+
+    success_url = reverse_lazy('products-seller')
+
+
+def register_request(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("home")
+        messages.error(
+            request, "Unsuccessful registration. Invalid information.")
+
+    form = NewUserForm()
+    return render(request=request, template_name="makeup/register.html", context={"register_form": form})
+
+
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("home")
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = AuthenticationForm()
+    return render(request=request, template_name="makeup/login.html", context={"login_form": form})

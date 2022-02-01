@@ -20,7 +20,7 @@
       <!-- Custom styles for this template -->
       <link href="{%static 'css/style.css' %}" rel="stylesheet" />
       <!-- responsive style -->
-      <link href="{%static 'makeup/css/responsive.css' %}" rel="stylesheet" />
+      <link href="{%static 'css/responsive.css' %}" rel="stylesheet" />
       {%block css%}
     
       {%endblock css%}
@@ -45,9 +45,28 @@
                         <li class="nav-item">
                            <a class="nav-link" href="{% url 'products' %}">Products</a>
                         </li>
-                        <li class="nav-item">
+                        {% comment %} <li class="nav-item">
                            <a class="nav-link" href="{% url 'products-seller' %}">seller</a>
+                        </li> {% endcomment %}
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Seller <span class="caret"></span></a>
+                           <ul class="dropdown-menu">
+                              <li><a href="{% url 'products-seller' %}">Products</a></li>
+                              <li><a href="">Brands</a></li>
+                           </ul>
                         </li>
+                        {%endif%}
+                        {% if not user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Account <span class="caret"></span></a>
+                           <ul class="dropdown-menu">
+                              <li><a href="{% url 'login' %}">Login</a></li>
+                              <li><a href="{% url 'register' %}">Register</a></li>
+                           </ul>
+                        </li>
+                        {%endif%}
+
                         <li class="nav-item">
                            <a class="nav-link" href="{% url 'brands' %}">brands</a>
                         </li>
