@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- Basic -->
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <!-- Mobile Metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <!-- Site Metas -->
+      <meta name="keywords" content="" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link rel="shortcut icon" href="{%static 'images/favicon.png' %}" type="">
+      <title>Cosmetic Boutique</title>
+      <!-- bootstrap core css -->
+      <link rel="stylesheet" type="text/css" href="{%static 'css/bootstrap.css' %}" />
+      <!-- font awesome style -->
+      <link href="{%static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+      <!-- Custom styles for this template -->
+      <link href="{%static 'css/style.css' %}" rel="stylesheet" />
+      <!-- responsive style -->
+      <link href="{%static 'makeup/css/responsive.css' %}" rel="stylesheet" />
+      {%block css%}
+    
+      {%endblock css%}
+   </head>
+   <body>
+      <div class="hero_area">
+         
+         <!-- header section strats -->
+         <header class="header_section header-sticky">
+            <div class="container">
+               <nav class="navbar navbar-expand-lg custom_nav-container ">
+                  <a class="navbar-brand" href="index.html"><img width="40%" src="{%static 'images/logo.png' %}" alt="#" /></a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class=""> </span>
+                  </button>
+                  <div class="collapse navbar-collapse mt-4" id="navbarSupportedContent">
+                     <ul class="navbar-nav">
+                        <li class="nav-item ">
+                           {% comment %} {%active%} {% endcomment %}
+                           <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 'products' %}">Products</a>
+                        </li>
+                        {% comment %} <li class="nav-item">
+                           <a class="nav-link" href="{% url 'products-seller' %}">seller</a>
+                        </li> {% endcomment %}
+                        <li class="nav-item dropdown">
+                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Seller hh<span class="caret"></span></a>
+                           <ul class="dropdown-menu">
+                              <li><a href="{% url 'products-seller' %}">Products</a></li>
+                              <li><a href="">Brands</a></li>
+                           </ul>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 'brands' %}">brands</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 'about' %}">About</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                        </li>
+                        <form class="form-inline">
+                           <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                           <i class="fa fa-search" aria-hidden="true"></i>
+                           </button>
+                        </form>
+                     </ul>
+                  </div>
+               </nav>
+            </div>
+         </header>
+         <!-- end header section -->
+         <!-- content section -->
+         {%block content%}
+    
+        {%endblock content%}
+        <!-- end content section -->
+      <!-- footer start -->
+      <footer>
+         <div class="container">
+            <div class="row">
+               <div class="col-md-4">
+                   <div class="full">
+                      <div class="logo_footer">
+                        <a href="#"><img width="210" src="{%static 'images/logo.png' %}" alt="#" /></a>
+                      </div>
+                      
+                   </div>
+               </div>
+               <div class="col-md-6">
+                 <div class="widget_menu">
+                        <h3>INFORMATION</h3>
+                        <ul>
+                           <li>ADDRESS: Sana'a Haddsh street Rowad coding academy</li>
+                           <li>TELEPHONE: +771 772 773</li>
+                           <li>EMAIL: sabafadl98@gmail.com</li>
+                          
+                        </ul>
+                        
+                  </div>
+                  <div class="information_f">
+                     <p>Subscribe by our newsletter and get update protidin.</p>
+                   </div>
+                   <div class="form_sub">
+                      <form>
+                         <fieldset>
+                            <div class="field">
+                               <input type="email" placeholder="Enter Your Mail" name="email" />
+                               <input type="submit" value="Subscribe" />
+                            </div>
+                         </fieldset>
+                      </form>
+                   </div>
+              </div>
+              <div class="col-md-2">
+               <div class="full">
+                  <div class="widget_menu">
+                     <h3>Menu</h3>
+                     <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'brands' %}">Brands</a></li>
+                        <li><a href="{% url 'products' %}">Products</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                     </ul>
+                  </div>
+                  
+               </div>
+             </div>
+              
+                     </div>
+                  </div>     
+                  
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- footer end -->
+      <div class="cpy_">
+         <p class="mx-auto">© 2022 All Rights Reserved By <a href="https://github.com/SabaFadhl">Saba Fadhl</a><br>
+         
+            Distributed By Rowad coding academy</a>
+         
+         </p>
+      </div>
+      <!-- jQery -->
+      <script src="{%static 'js/jquery-3.4.1.min.js'%}"></script>
+      <!-- popper js -->
+      <script src="{%static 'js/popper.min.js'%}"></script>
+      <!-- bootstrap js -->
+      <script src="{%static 'js/bootstrap.js'%}"></script>
+      <!-- custom js -->
+      <script src="{%static 'js/custom.js'%}"></script>
+   </body>
+</html>

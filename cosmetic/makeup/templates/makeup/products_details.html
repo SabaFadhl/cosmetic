@@ -1,0 +1,83 @@
+{% extends 'makeup/base.html' %}
+{% load static %}
+
+   {%block content%}
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            
+            <div class="row row-sm">
+           
+               <div class="col-md-6 ">
+                  {% comment %} <img class="my_img" src="https://s.fotorama.io/1.jpg" alt="" width='100%'> {% endcomment %}
+                  {% comment %} <div class="img-box">
+                     <img src="{%static 'images/p2.png'%}" alt="" >
+                  </div> {% endcomment %}
+                  <div class="box" style="HEIGHT: 80%;">
+                     <div class="img-box">
+                        <img src="{%static 'images/p2.png'%}" alt="">
+                     </div>
+                     
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="_product-detail-content">
+                     <p class="product_name">{{product.name}} </p>
+                     <div class="_p-price-box">
+                        <div class="p-list">
+                           {% comment %} <span> M.R.P. : <i class="fa fa-inr"></i> <del> 1399  </del>   </span> {% endcomment %}
+                           <span class="price">$ {{product.price}}</span>
+                        </div>
+                        {% comment %} <div class="_p-add-cart">
+                           <div class="_p-qty">
+                              <span>Add Quantity</span>
+                              <div class="value-button decrease_" id="" value="Decrease Value">-</div>
+                              <input type="number" name="qty" id="number" value="1" />
+                              <div class="value-button increase_" id="" value="Increase Value">+</div>
+                           </div>
+                        </div> {% endcomment %}
+                        <div class="_p-features">
+                           <span> Description About this product:- </span>
+                           {{product.descreption}}                   
+                        </div>
+                        <form action="" method="get" accept-charset="utf-8">
+                           <ul class="spe_ul"></ul>
+                           <div class="_p-qty-and-cart">
+                              <div class="_p-add-cart">
+                                 {% comment %} <button class="btn-theme btn buy-btn" tabindex="0">
+                                 <i class="fa fa-shopping-cart"></i> Buy Now
+                                 </button> {% endcomment %}
+                                 <button class="btn-theme btn btn-success" tabindex="0" type='submit'>
+                                 <i class="fa fa-shopping-cart"></i> Add to Cart
+                                 </button>
+                                 <input type="hidden" name="pid" value="{{product.id}}" />
+                                 </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% comment %} <div class="btn-box">
+               <a href="">
+               View All products
+               </a>
+            </div> {% endcomment %}
+         </div>
+         </div>
+      </section>
+      <!-- end product section -->
+      {%endblock content%}
