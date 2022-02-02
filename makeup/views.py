@@ -11,10 +11,13 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate,logout 
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
+from django.contrib.auth.decorators import login_required
 # from bootstrap_datepicker_plus import DatePickerInput
 # from django.contrib.auth import group_required
 # @group_required('seller')
-class SellerProducts(ListView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+# @login_required
+class SellerProducts(LoginRequiredMixin,ListView):
     """
     this is list view for products useing genric list view
     """
@@ -22,6 +25,7 @@ class SellerProducts(ListView):
     context_object_name = 'products'
     template_name = 'seller/products.html'
     queryset = Products.objects.order_by("-id")
+    
 
 
 class ProductsList(ListView):
@@ -160,7 +164,7 @@ def AddProduct(request, id=None):
         }
     return render(request, template_name, context)
 
-
+# @login_required
 class AddProductFormView(FormView):
     template_name = 'seller/form.html'
     form_class = ProductsForm
@@ -171,7 +175,7 @@ class AddProductFormView(FormView):
         # It should return an HttpResponse.
         return super().form_valid(form)
 
-
+# @login_required
 class productCreateView(CreateView):
     template_name = 'seller/form.html'
     model = Products
@@ -185,7 +189,7 @@ class productCreateView(CreateView):
     def get_success_url(self):
         return self.request.GET.get('next', reverse('products-seller'))
 
-
+# @login_required
 class productUpdateView(UpdateView):
     model = Products
     template_name = 'seller/form.html'
@@ -193,7 +197,7 @@ class productUpdateView(UpdateView):
     fields = ['name', 'kind', 'descreption', 'expir_date', 'price', 'brand']
     success_url = reverse_lazy('products-seller')
 
-
+# @login_required
 class productDeleteView(DeleteView):
     model = Products
     template_name = 'seller/confirm.html'
@@ -234,7 +238,7 @@ def login_request(request):
     form = AuthenticationForm()
     return render(request=request, template_name="makeup/login.html", context={"login_form": form})
 
-
+@login_required
 def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")

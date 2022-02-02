@@ -1,12 +1,12 @@
 #header {
-    background: #f7444e;
+    background: #f79b34;
     color: #fafafa;
 }
 #branding h1, #branding h1 a:link, #branding h1 a:visited {
     color: #ffffff;
 }
 .module h2, .module caption, .inline-group h2{
-    background: #f7444e;
+    background: #f79b34;
 
 }
 
@@ -30,11 +30,11 @@ body {
 }
 :root {
     --primary: #788287;
-    --secondary: #f7444e;
+    --secondary: #f79b34;
     --error-fg: red;
     --error-fg: red;
-    --default-button-hover-bg: #f7444e;
-    --link-selected-fg: #f7444e;
+    --default-button-hover-bg: #f79b34;
+    --link-selected-fg: #f79b34;
     --link-fg: #0c0d0d;
 }
 .dashboard #content {
