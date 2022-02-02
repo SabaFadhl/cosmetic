@@ -1151,3 +1151,7 @@ form input[type="submit"]:focus {
 .center{
   text-align:-webkit-center;
 }
+
+.icon{
+  color: white;
+}

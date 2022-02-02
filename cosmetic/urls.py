@@ -19,6 +19,8 @@ from makeup.views import *
 from makeup.urls import *
 from makeup.views import *
 from makeup.urls import *
+from django.conf import settings  
+from django.conf.urls.static import static 
 
 admin.site.site_header = 'Cosmetic Admin Panel'
 admin.site.site_title = 'cosmetic admistration'
@@ -33,4 +35,4 @@ urlpatterns = [
     
     # path('brands/<name>',brand_list ),
     # path('products/<name>/', products_list),
-]
+]+  static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  

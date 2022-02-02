@@ -21,9 +21,9 @@
             
             <div class="row">
                
-               <form method="post">
+               <form method="post" enctype="multipart/form-data">
                   {% csrf_token %}
-                  {{ form.as_p }}
+                  {{ form }}
                   
                   <h1>{{ form.errors }}</h1>
                   {% comment %} {% for i in forms.errors %}

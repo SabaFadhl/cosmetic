@@ -180,7 +180,7 @@ class productCreateView(CreateView):
     template_name = 'seller/form.html'
     model = Products
     # success_url = 'products-seller'
-    fields = ['name', 'kind', 'descreption', 'expir_date', 'price', 'brand']
+    fields = ['name', 'kind', 'descreption', 'expir_date', 'price', 'image','brand']
     # def get_form(self):
     #     form = super().get_form()
     #     form.fields['expir_date'].widget = DatePickerInput()

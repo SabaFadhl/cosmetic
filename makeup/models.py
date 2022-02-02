@@ -12,8 +12,9 @@ class Brand(models.Model):
     def __str__(self) :
         return self.name
 
-    def get_absolute_url(self):
-        return f"/brands/{self.name}/"
+    # def get_absolute_url(self):
+        # return f"/brands/{self.name}/"
+        
     
     
     
@@ -25,6 +26,7 @@ class Products(models.Model):
     kind=models.CharField(max_length=50)
     descreption=models.TextField(null=True)
     expir_date=models.DateField(null=True)
+    image = models.ImageField(upload_to='images')  #
     price=models.PositiveIntegerField(default=10, validators=[MinValueValidator(5)])
     brand=models.ForeignKey(Brand,on_delete=models.CASCADE,null=True)
     
