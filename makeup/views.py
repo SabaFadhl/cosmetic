@@ -12,8 +12,8 @@ from django.contrib.auth import login, authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
 # from bootstrap_datepicker_plus import DatePickerInput
-
-
+# from django.contrib.auth import group_required
+# @group_required('seller')
 class SellerProducts(ListView):
     """
     this is list view for products useing genric list view

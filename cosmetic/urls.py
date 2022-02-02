@@ -20,6 +20,10 @@ from makeup.urls import *
 from makeup.views import *
 from makeup.urls import *
 
+admin.site.site_header = 'Cosmetic Admin Panel'
+admin.site.site_title = 'cosmetic admistration'
+admin.site.index_title = "cosmetic admistration"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('seller/', ''),
