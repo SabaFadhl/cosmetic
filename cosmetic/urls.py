@@ -32,7 +32,9 @@ urlpatterns = [
     path('', views.home,name="home"),
     path('', include('makeup.urls')),
     # path('seller', include('seller.urls')),
-    
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('api/', include('api.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     # path('brands/<name>',brand_list ),
     # path('products/<name>/', products_list),
 ]+  static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  
