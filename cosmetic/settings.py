@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'makeup',
     'api',
+    'rest_framework_swagger',
     # 'seller',
 ]
 
@@ -71,7 +72,7 @@ TEMPLATES = [
             ],
             'libraries':{
             'my_templatetag': 'makeup.templatetags.has_group',
-            
+            'staticfiles': 'django.templatetags.static',
             }
         },
     },
@@ -156,3 +157,4 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ]
 }
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }

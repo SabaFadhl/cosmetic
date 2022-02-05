@@ -15,7 +15,7 @@ class BrandSerializer(serializers.ModelSerializer):
 
 class ProductsSerializer(serializers.ModelSerializer):
     """
-    this seriliazer for models brand to create, update, delete
+    this seriliazer for models Products to create, update, delete
     """
     class Meta:
         model = Products
