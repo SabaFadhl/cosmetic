@@ -13,3 +13,12 @@ class BrandSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ['name', 'orgin']
 
+class ProductsSerializer(serializers.ModelSerializer):
+    """
+    this seriliazer for models brand to create, update, delete
+    """
+    class Meta:
+        model = Products
+        # fields = '__all__'
+        # fields = ['name', 'kind','price',]
+        fields = '__all__'
