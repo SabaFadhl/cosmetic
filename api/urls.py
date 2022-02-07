@@ -16,7 +16,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-from .views import BrandDetail,BrandList,ProductsList,ProductsDetail
+from .views import BrandDetail,BrandList,ProductsList,ProductsDetail,favoriteProductCreate
 
 
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -27,6 +27,7 @@ urlpatterns = [
     path('brand/<int:pk>', BrandDetail.as_view()),
     path('products', ProductsList.as_view()),
     path('products/<int:pk>', ProductsDetail.as_view()),
+    path('favorite-product/', favoriteProductCreate.as_view())
 
 ] 
 urlpatterns = format_suffix_patterns(urlpatterns)

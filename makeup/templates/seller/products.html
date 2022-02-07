@@ -53,7 +53,7 @@
                      <!-- Call to action buttons -->
                      <ul class="list-inline m-0">
                         <li class="list-inline-item">
-                            <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><a class='icon' href="{% url 'edit-product' product.id %}"><i class="fa fa-edit"></i></a></button>
+                            <a class='icon' href="{% url 'edit-product' product.id %}"><i class="fa fa-edit"></i></a></button>
                         </li>
                         <li class="list-inline-item">
                             <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" onclick="return confirm('Are you sure to delete {{product.name}}?');"><a class='icon' href="{% url 'delete-product' product.id %}"><i class="fa fa-trash"></i></a></button>

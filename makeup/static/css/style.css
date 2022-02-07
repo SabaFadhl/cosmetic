@@ -1155,3 +1155,13 @@ form input[type="submit"]:focus {
 .icon{
   color: white;
 }
+
+.fav{
+  color: #f79b34;
+}
+.rating__star{
+  color: #f79b34;
+}
+.checked {
+  color: #f79b34;
+}

@@ -1,4 +1,7 @@
+from urllib import request
 from django.shortcuts import render, redirect
+
+from api.models import favorite
 from .models import *
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
@@ -8,7 +11,7 @@ from .forms import ProductsForm, NewUserForm
 from django.shortcuts import reverse
 from django.urls import reverse_lazy
 # from .forms import NewUserForm
-from django.contrib.auth import login, authenticate,logout 
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
 from django.contrib.auth.decorators import login_required
@@ -17,7 +20,9 @@ from django.contrib.auth.decorators import login_required
 # @group_required('seller')
 from django.contrib.auth.mixins import LoginRequiredMixin
 # @login_required
-class SellerProducts(LoginRequiredMixin,ListView):
+
+
+class SellerProducts(LoginRequiredMixin, ListView):
     """
     this is list view for products useing genric list view
     """
@@ -25,7 +30,6 @@ class SellerProducts(LoginRequiredMixin,ListView):
     context_object_name = 'products'
     template_name = 'seller/products.html'
     queryset = Products.objects.order_by("-id")
-    
 
 
 class ProductsList(ListView):
@@ -35,6 +39,25 @@ class ProductsList(ListView):
     model = Products
     context_object_name = 'products'
     template_name = 'makeup/products.html'
+    # self.user
+
+    def get(self, request, *args, **kwargs):
+        self.user = request.user
+        return super(ProductsList, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(ProductsList, self).get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        # fav=favorite.objects.filter(user=self.user )
+        # fav=favorite.objects.values('product',user=self.user)
+        # context['fav'] = fav
+        products_fav = favorite.objects.values_list('product', flat=True).filter(user=self.user)
+        fav = Products.objects.filter(pk__in=set(products_fav))
+        print("===========================")
+        print(fav)
+        context['fav'] = fav
+        return context
 # class HomeList(ListView):
 #     """
 #     this is list view new products useing genric list view
@@ -165,6 +188,8 @@ def AddProduct(request, id=None):
     return render(request, template_name, context)
 
 # @login_required
+
+
 class AddProductFormView(FormView):
     template_name = 'seller/form.html'
     form_class = ProductsForm
@@ -176,11 +201,14 @@ class AddProductFormView(FormView):
         return super().form_valid(form)
 
 # @login_required
+
+
 class productCreateView(CreateView):
     template_name = 'seller/form.html'
     model = Products
     # success_url = 'products-seller'
-    fields = ['name', 'kind', 'descreption', 'expir_date', 'price', 'image','brand']
+    fields = ['name', 'kind', 'descreption',
+              'expir_date', 'price', 'image', 'brand']
     # def get_form(self):
     #     form = super().get_form()
     #     form.fields['expir_date'].widget = DatePickerInput()
@@ -190,6 +218,8 @@ class productCreateView(CreateView):
         return self.request.GET.get('next', reverse('products-seller'))
 
 # @login_required
+
+
 class productUpdateView(UpdateView):
     model = Products
     template_name = 'seller/form.html'
@@ -198,6 +228,8 @@ class productUpdateView(UpdateView):
     success_url = reverse_lazy('products-seller')
 
 # @login_required
+
+
 class productDeleteView(DeleteView):
     model = Products
     template_name = 'seller/confirm.html'
@@ -237,6 +269,7 @@ def login_request(request):
             messages.error(request, "Invalid username or password.")
     form = AuthenticationForm()
     return render(request=request, template_name="makeup/login.html", context={"login_form": form})
+
 
 @login_required
 def logout_request(request):
