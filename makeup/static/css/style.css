@@ -1165,3 +1165,12 @@ form input[type="submit"]:focus {
 .checked {
   color: #f79b34;
 }
+
+.trash
+{
+  color:red
+}
+
+.edit{
+  color: green;
+}

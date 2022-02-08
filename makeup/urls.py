@@ -5,6 +5,7 @@ from makeup.views import ProductsList,BrandsList,ProductDetailView,SellerProduct
 
 urlpatterns = [
     path('about/',views.about,name="about"),
+    path('my-foavorite/',views.myFavorite,name="myFavorite"),
     # path('products/<int:id>',views.post_details,name="products-details"),
     path('contact/',views.contact,name="contact"),
     path('details/<pk>',ProductDetailView.as_view(),name="product-detail"),

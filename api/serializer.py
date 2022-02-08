@@ -1,7 +1,9 @@
 from dataclasses import field
+import imp
 from pyexpat import model
 from rest_framework import serializers
 from makeup.models import *
+from .models import *
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -22,3 +24,12 @@ class ProductsSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         # fields = ['name', 'kind','price',]
         fields = '__all__'
+class FavoriteSerializer(serializers.ModelSerializer):
+    """
+    this seriliazer for models Products to create, update, delete
+    """
+    class Meta:
+        model = favorite
+        # fields = '__all__'
+        # fields = ['name', 'kind','price',]
+        fields = 'product'

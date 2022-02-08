@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse
 # Create your views here.
 from rest_framework import viewsets, generics, mixins
-from .serializer import BrandSerializer, ProductsSerializer
+from .serializer import BrandSerializer, ProductsSerializer,FavoriteSerializer
 from makeup.models import Brand
 from django.shortcuts import render
 # Create your views here.
@@ -15,6 +15,21 @@ from rest_framework.response import Response
 #     queryset = Brand.objects.all().order_by('name')
 #     serializer_class = BrandSerializer
 
+class FavoriteList(mixins.ListModelMixin,
+                   generics.GenericAPIView):
+    
+    
+    serializer_class = FavoriteSerializer
+    # queryset=favorite.objects.filter( user=request.user)
+   
+    
+    def get(self, request, *args, **kwargs):
+        """
+        this view for git my favorit
+        """
+        return self.list(request, *args, **kwargs)
+
+    
 
 class ProductsList(mixins.ListModelMixin,
                    mixins.CreateModelMixin,

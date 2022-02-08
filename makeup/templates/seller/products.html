@@ -53,10 +53,10 @@
                      <!-- Call to action buttons -->
                      <ul class="list-inline m-0">
                         <li class="list-inline-item">
-                            <a class='icon' href="{% url 'edit-product' product.id %}"><i class="fa fa-edit"></i></a></button>
+                            <a class='icon' href="{% url 'edit-product' product.id %}" class='edit'><i class="fa fa-edit" style="color: green;"></i></a></button>
                         </li>
                         <li class="list-inline-item">
-                            <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" onclick="return confirm('Are you sure to delete {{product.name}}?');"><a class='icon' href="{% url 'delete-product' product.id %}"><i class="fa fa-trash"></i></a></button>
+                            <a class='icon' href="{% url 'delete-product' product.id %}" onclick="return confirm('Are you sure to delete {{product.name}}?');"><i class="fa fa-trash" class='trash'style="color: red;"></i></a>
                         </li>
                     </ul>
                   </div>

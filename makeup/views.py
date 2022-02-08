@@ -1,6 +1,6 @@
 from urllib import request
 from django.shortcuts import render, redirect
-
+import requests
 from api.models import favorite
 from .models import *
 from django.http import HttpResponse
@@ -21,7 +21,33 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 # @login_required
 
+# class SellerProducts(LoginRequiredMixin, ListView):
+#     """
+#     this is list view for my favorite
+#     """
+#     model = '/api/favorite-list/'
+    
+#     context_object_name = 'products'
+#     template_name = 'seller/products.html'
+def myFavorite(request):
+    # response=requests.get('http://127.0.0.1:8000/api/favorite-list').json()
+    # print("========response=========")
+    # print (response)
+    # MyModel.objects.order_by('-id')[:1]
 
+    products=favorite.objects.filter(user=request.user)
+    # print(p)
+    # products=Products(p.values('product'))
+    print("===============")
+    
+    # print(products)
+    print ("]]]]]]]]]]]]",products)
+    context = {
+        'fav': products,
+    }
+    template_name = 'makeup/favorite.html'
+    return render(request,template_name,context) 
+  
 class SellerProducts(LoginRequiredMixin, ListView):
     """
     this is list view for products useing genric list view
@@ -43,6 +69,7 @@ class ProductsList(ListView):
 
     def get(self, request, *args, **kwargs):
         self.user = request.user
+        self.request=request
         return super(ProductsList, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -52,12 +79,19 @@ class ProductsList(ListView):
         # fav=favorite.objects.filter(user=self.user )
         # fav=favorite.objects.values('product',user=self.user)
         # context['fav'] = fav
-        products_fav = favorite.objects.values_list('product', flat=True).filter(user=self.user)
-        fav = Products.objects.filter(pk__in=set(products_fav))
-        print("===========================")
-        print(fav)
-        context['fav'] = fav
+        if not self.request.user.is_anonymous :
+            print("[[[[[[[[[[[[[[[[[[",self.request.user)
+            products_fav = favorite.objects.values_list('product', flat=True).filter(user=self.user)
+            fav = Products.objects.filter(pk__in=set(products_fav))
+            # print("===========================")
+            # print(fav)
+            context['fav'] = fav
+            return context
+        
+        context['products'] = Products.objects.all()
         return context
+        
+        # return 
 # class HomeList(ListView):
 #     """
 #     this is list view new products useing genric list view
